@@ -16,7 +16,7 @@ async function run() {
         type VARCHAR(512) NOT NULL,
         desc VARCHAR(1024) NOT NULL,
         rarity INTEGER NOT NULL,
-        requresAttunement INTEGER NOT NULL
+        requresAttunement BOOLEAN NOT NULL
       );
     `);
 
