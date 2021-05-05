@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import client from '../lib/client.js';
 // import our seed data:
-import magicItems from './magic-items.js';
+import items from './items.js';
 
 run();
 
@@ -10,7 +10,7 @@ async function run() {
   try {
 
     await Promise.all(
-      magicItems.map(item => {
+      items.map(item => {
         return client.query(`
           INSERT INTO items (name, description, type, rarity, requires-attunement)
           VALUES ($1, $2, $3, $4, $5);
