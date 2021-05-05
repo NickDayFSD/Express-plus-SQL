@@ -13,10 +13,10 @@ async function run() {
     await Promise.all(
       items.map(item => {
         return client.query(`
-          INSERT INTO items (name, desc, type, rarity, requiresAttunement)
+          INSERT INTO items (name, description, type, rarity, requiresAttunement)
           VALUES ($1, $2, $3, $4, $5);
           `,
-          [item.name, item.desc, item.type, item.rarity, item.requresAttunement]);
+          [item.name, item.description, item.type, item.rarity, item.requiresAttunement]);
       })
     );
 

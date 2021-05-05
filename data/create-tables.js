@@ -14,9 +14,9 @@ async function run() {
         id SERIAL PRIMARY KEY NOT NULL,
         name VARCHAR(512) NOT NULL,
         type VARCHAR(512) NOT NULL,
-        desc VARCHAR(1024) NOT NULL,
-        rarity INTEGER NOT NULL,
-        requresAttunement BOOLEAN NOT NULL
+        description VARCHAR(1024) NOT NULL,
+        rarity VARCHAR(512) NOT NULL,
+        requiresAttunement BOOLEAN NOT NULL
       );
     `);
 
