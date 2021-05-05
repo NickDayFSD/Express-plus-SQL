@@ -133,4 +133,16 @@ describe('API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(health);
   });
+
+  it('GET list of items from /api/items', async () => {
+    const r1 = await request.post('/api/items').send(planes);
+    planes = r1.body;
+    const r2 = await request.post('/api/items').send(shield);
+    shield = r2.body;
+
+    const response = await request.get('/api/items');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expect.arrayContaining([health, planes, shield]));
+  });
 });
