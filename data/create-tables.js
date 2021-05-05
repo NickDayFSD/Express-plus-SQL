@@ -16,7 +16,7 @@ async function run() {
         type VARCHAR(512) NOT NULL,
         description VARCHAR(1024) NOT NULL,
         rarity VARCHAR(512) NOT NULL,
-        requiresAttunement BOOLEAN NOT NULL
+        requires_attunement BOOLEAN NOT NULL
       );
     `);
 
