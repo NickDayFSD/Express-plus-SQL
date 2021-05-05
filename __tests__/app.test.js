@@ -145,4 +145,20 @@ describe('API Routes', () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expect.arrayContaining([health, planes, shield]));
   });
+
+  it('GET shield from /api/items/:id', async () => {
+    const response = await request.get(`/api/items/${shield.id}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(shield);
+  });
+
+  it('DELETE health from /api/items/:id', async () => {
+    const response = await request.delete(`/api/items/${health.id}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(health);
+
+    const getResponse = await request.get('/api/items');
+    expect(getResponse.status).toBe(200);
+    expect(getResponse.body).toEqual(expect.arrayContaining([shield, planes]));
+  });
 });
