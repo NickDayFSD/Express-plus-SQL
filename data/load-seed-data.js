@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import client from '../lib/client.js';
 // import our seed data:
-import cats from './cats.js';
+import magicItems from './magic-items.js';
 
 run();
 
@@ -10,23 +10,23 @@ async function run() {
   try {
 
     await Promise.all(
-      cats.map(cat => {
+      magicItems.map(item => {
         return client.query(`
-          INSERT INTO cats (name, type, url, year, lives, is_sidekick)
-          VALUES ($1, $2, $3, $4, $5, $6);
-        `,
-        [cat.name, cat.type, cat.url, cat.year, cat.lives, cat.isSidekick]);
+          INSERT INTO items (name, description, type, rarity, requires-attunement)
+          VALUES ($1, $2, $3, $4, $5);
+          `,
+          [item.name, item.desc, item.type, item.rarity, item.requresAttunement]);
       })
     );
-    
+
 
     console.log('seed data load complete');
   }
-  catch(err) {
+  catch (err) {
     console.log(err);
   }
   finally {
     client.end();
   }
-    
+
 }
