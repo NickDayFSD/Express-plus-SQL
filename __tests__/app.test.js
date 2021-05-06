@@ -161,4 +161,10 @@ describe('API Routes', () => {
     expect(getResponse.status).toBe(200);
     expect(getResponse.body).toEqual(expect.arrayContaining([shield, planes]));
   });
+
+  it('GET planes from /api/items/name/:name', async () => {
+    const response = await request.get(`/api/items/name/${shield.name}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(shield);
+  });
 });
