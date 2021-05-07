@@ -28,7 +28,8 @@ async function run() {
     await Promise.all(
       items.map(item => {
         return client.query(`
-          INSERT INTO items (name, description, type, rarity, requires_attunement, user_id)
+          INSERT INTO items (name, description, type, rarity,
+                      requires_attunement, user_id)
           VALUES ($1, $2, $3, $4, $5, $6);
           `,
           [item.name, item.description, item.type, item.rarity, item.requiresAttunement, user.id]);
