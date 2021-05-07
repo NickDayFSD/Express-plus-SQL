@@ -145,7 +145,7 @@ describe('post, put, delete, get', () => {
     health = response.body;
   });
 
-  it.skip('PUT updated shield to /api/items/:id', async () => {
+  it('PUT updated shield to /api/items/:id', async () => {
     health.name = 'Suberb Amulet of Health';
     health.rarity = 'legendary';
 
