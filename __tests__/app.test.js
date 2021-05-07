@@ -180,10 +180,10 @@ describe('post, put, delete, get', () => {
     expect(response.body).toEqual(expect.arrayContaining(expected));
   });
 
-  it.skip('GET shield from /api/items/:id', async () => {
+  it('GET shield from /api/items/:id', async () => {
     const response = await request.get(`/api/items/${shield.id}`);
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(shield);
+    expect(response.body).toEqual({ ...shield, userName: user.name });
   });
 
   it.skip('DELETE health from /api/items/:id', async () => {
