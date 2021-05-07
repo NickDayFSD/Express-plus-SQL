@@ -5,14 +5,10 @@ import { execSync } from 'child_process';
 
 const request = supertest(app);
 
-describe('API Routes', () => {
-
-  // beforeAll(() => {
-  //   execSync('npm run setup-db');
-  // });
+describe.skip('API Routes', () => {
 
   beforeAll(() => {
-    execSync('npm run recreate-tables');
+    execSync('npm run setup-db');
   });
 
   afterAll(async () => {
@@ -85,6 +81,32 @@ describe('API Routes', () => {
     expect(response.body).toEqual(expectedItems[1]);
   });
 
+});
+
+describe('post, put, delete, get', () => {
+
+  let user;
+
+  beforeAll(async () => {
+    execSync('npm run recreate-tables');
+
+    const response = await request
+      .post('/api/auth/signup')
+      .send({
+        name: 'Waffle the user',
+        email: 'waffle@user.com',
+        password: 'Syrup'
+      });
+
+    expect(response.status).toBe(200);
+
+    user = response.body;
+  });
+
+  afterAll(async () => {
+    return client.end();
+  });
+
   let health = {
     id: expect.any(Number),
     name: 'Amulet of Health',
@@ -112,6 +134,7 @@ describe('API Routes', () => {
   };
 
   it('POST health to /api/items', async () => {
+    health.userId = user.id;
     const response = await request
       .post('/api/items')
       .send(health);
@@ -122,7 +145,7 @@ describe('API Routes', () => {
     health = response.body;
   });
 
-  it('PUT updated shield to /api/items/:id', async () => {
+  it.skip('PUT updated shield to /api/items/:id', async () => {
     health.name = 'Suberb Amulet of Health';
     health.rarity = 'legendary';
 
@@ -134,7 +157,7 @@ describe('API Routes', () => {
     expect(response.body).toEqual(health);
   });
 
-  it('GET list of items from /api/items', async () => {
+  it.skip('GET list of items from /api/items', async () => {
     const r1 = await request.post('/api/items').send(planes);
     planes = r1.body;
     const r2 = await request.post('/api/items').send(shield);
@@ -146,13 +169,13 @@ describe('API Routes', () => {
     expect(response.body).toEqual(expect.arrayContaining([health, planes, shield]));
   });
 
-  it('GET shield from /api/items/:id', async () => {
+  it.skip('GET shield from /api/items/:id', async () => {
     const response = await request.get(`/api/items/${shield.id}`);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(shield);
   });
 
-  it('DELETE health from /api/items/:id', async () => {
+  it.skip('DELETE health from /api/items/:id', async () => {
     const response = await request.delete(`/api/items/${health.id}`);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(health);
@@ -162,7 +185,7 @@ describe('API Routes', () => {
     expect(getResponse.body).toEqual(expect.arrayContaining([shield, planes]));
   });
 
-  it('GET planes from /api/items/name/:name', async () => {
+  it.skip('GET planes from /api/items/name/:name', async () => {
     const response = await request.get(`/api/items/name/${shield.name}`);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(shield);
