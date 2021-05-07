@@ -186,14 +186,14 @@ describe('post, put, delete, get', () => {
     expect(response.body).toEqual({ ...shield, userName: user.name });
   });
 
-  it.skip('DELETE health from /api/items/:id', async () => {
+  it('DELETE health from /api/items/:id', async () => {
     const response = await request.delete(`/api/items/${health.id}`);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(health);
 
     const getResponse = await request.get('/api/items');
     expect(getResponse.status).toBe(200);
-    expect(getResponse.body).toEqual(expect.arrayContaining([shield, planes]));
+    expect(getResponse.body.find(item => item.id === health.id)).toBeUndefined();
   });
 
   it.skip('GET planes from /api/items/name/:name', async () => {
