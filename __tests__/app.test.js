@@ -157,16 +157,27 @@ describe('post, put, delete, get', () => {
     expect(response.body).toEqual(health);
   });
 
-  it.skip('GET list of items from /api/items', async () => {
+  it('GET list of items from /api/items', async () => {
+    planes.userId = user.id;
     const r1 = await request.post('/api/items').send(planes);
     planes = r1.body;
+
+    shield.userId = user.id;
     const r2 = await request.post('/api/items').send(shield);
     shield = r2.body;
 
     const response = await request.get('/api/items');
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual(expect.arrayContaining([health, planes, shield]));
+
+    const expected = [planes, shield, health].map(item => {
+      return {
+        userName: user.name,
+        ...item
+      };
+    });
+
+    expect(response.body).toEqual(expect.arrayContaining(expected));
   });
 
   it.skip('GET shield from /api/items/:id', async () => {
